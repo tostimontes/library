@@ -3,22 +3,54 @@ function Book(title, author, pages, read) {
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.info = function () {
-    let readOrNot;
-    this.read === true ? (readOrNot = "read") : (readOrNot = "not read yet");
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${readOrNot}`;
-    //   toggle read func
-    }
-  };
 
+  };
 // Add sorting functionality
-const addBookButton = document.querySelector("#add_new_book");
-addBookButton.addEventListener("click", addBookToLibrary);
+
+const addBookButton = document.getElementById("add_new_book");
 const dialog = document.querySelector("#book_form_dialog");
+const form = document.querySelector("#book_form");
 const closeDialogButton = document.querySelector("#close_dialog");
+const submitBook = document.querySelector("#form_submit");
 closeDialogButton.addEventListener("click", () => {
-    dialog.close();
+  dialog.close();
 });
+
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+});
+
+submitBook.addEventListener("click", () => {
+  const newTitle = document.getElementById("title").value;
+  const newAuthor = document.getElementById("author").value;
+  const newPages = document.getElementById("pages").value;
+  let newRead = document.getElementById("read").checked;
+
+  createBookCard(newTitle, newAuthor, newPages, newRead);
+})
+// HTML Book Card creation
+function createBookCard(title, author, pages, read) {
+  const newBook = new Book(title, author, pages, read);
+  const bookCard = document.createElement("div");
+  bookCard.classList.add("card");
+  const bookTitle = document.createElement("h2");
+  bookTitle.classList.add("book_title");
+  bookTitle.textContent = newBook.title;
+  const bookAuthor = document.createElement("h3");
+  bookAuthor.classList.add("book_author");
+  bookAuthor.textContent = newBook.author;
+  const bookPages = document.createElement("p");
+  bookPages.classList.add("book_pages");
+  bookPages.textContent = newBook.pages;
+  const bookRead = document.createElement("button");
+  bookRead.classList.add("read_status");
+  bookRead.setAttribute("value", newBook.read)
+  bookRead.textContent = newBook.read;
+  bookCard.append(bookTitle, bookAuthor, bookPages, bookRead)
+  console.log(bookCard);
+}
+
 
 const exampleBook = {
     title: "Example Title",
@@ -29,13 +61,6 @@ const exampleBook = {
 
 const myLibrary = [];
 
-myLibrary.push(exampleBook);
-
-
-function addBookToLibrary() {
-    dialog.showModal();
-    event.preventDefault();
-}
 
 // Loop through library function
 

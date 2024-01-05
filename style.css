@@ -65,7 +65,7 @@ header {
 }
 
 #book_form_dialog {
-  /* display: block; */
+  display: block;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -103,7 +103,7 @@ header {
       overflow: scroll;
     }
   }
-  & button {
+  & #close_dialog {
     cursor: pointer;
     background-color: burlywood;
     outline: none;
@@ -123,6 +123,21 @@ header {
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+  & #form_submit {
+    background-color: burlywood;
+    color: #3f0000;
+    border: 0;
+    border-radius: 1.3rem;
+    cursor: pointer;
+    font-size: 2.2rem;
+    height: 4rem;
+    padding: 0 1rem;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    outline: none;
+    box-shadow: 2px 2px 2px black;
+    align-self: flex-end;
   }
 }
 
