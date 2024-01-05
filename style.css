@@ -55,6 +55,17 @@ header {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
+.book_list {
+  margin: 1rem 0 0 2rem;
+  & li {
+    margin-bottom: 0.5rem;
+    & a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+
 .library {
   width: 60%;
   position: relative;
@@ -62,6 +73,8 @@ header {
   padding: 3rem;
   grid-template-columns: repeat(auto-fit, minmax(25rem, 25rem));
   gap: 3rem;
+  height: calc(100vh - 10rem);
+  overflow-y: auto;
 }
 
 #book_form_dialog {
@@ -192,7 +205,7 @@ header {
   box-shadow: 0.3rem 0.3rem 10px black;
   position: absolute;
   bottom: 3rem;
-  right: 3rem;
+  right: 29rem;
 }
 
 .controls {

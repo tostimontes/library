@@ -7,12 +7,14 @@ function Book(title, author, pages, read) {
 // Add sorting functionality
 
 const myLibrary = [];
+const libraryTitleNames = [];
 const addBookButton = document.getElementById("add_new_book");
 const dialog = document.querySelector("#book_form_dialog");
 const form = document.querySelector("#book_form");
 const closeDialogButton = document.querySelector("#close_dialog");
 const submitBook = document.querySelector("#form_submit");
 const libraryUI = document.querySelector(".library");
+const bookList = document.querySelector(".book_list");
 closeDialogButton.addEventListener("click", () => {
   dialog.close();
 });
@@ -33,6 +35,7 @@ submitBook.addEventListener("click", () => {
 
   const newBook = new Book(newTitle, newAuthor, newPages, newRead);
   myLibrary.push(newBook);
+  libraryTitleNames.push(newTitle);
   createBookCard(newBook);
   clearForm();
   dialog.close();
@@ -41,6 +44,7 @@ submitBook.addEventListener("click", () => {
 function createBookCard(book) {
   const bookCard = document.createElement("div");
   bookCard.classList.add("card");
+  bookCard.setAttribute("id", book.title.split(" ").join(""));
   const bookTitle = document.createElement("h2");
   bookTitle.classList.add("book_title");
   bookTitle.textContent = book.title;
@@ -62,8 +66,21 @@ function createBookCard(book) {
 
 function updateLibraryUI(card) {
   libraryUI.appendChild(card);
+  updateNavLinks();
 }
 
+function updateNavLinks() {
+  myLibrary.forEach((book) => {
+    const listItem = document.createElement("li");
+    const anchor = document.createElement("a");
+    anchor.textContent = book.title;
+    anchor.setAttribute("href", `#${book.title.split(" ").join("")}`);
+    anchor.classList.add("nav_link");
+    listItem.appendChild(anchor);
+    bookList.appendChild(listItem);
+  });
+}
+// nav links should change only when the event: library changes its cards changes, so that it shows only the filtered cards
 function clearForm() {
   document.querySelector("#title").value = "";
   document.querySelector("#author").value = "";
