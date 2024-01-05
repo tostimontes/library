@@ -45,6 +45,10 @@ function createBookCard(book) {
   const bookCard = document.createElement("div");
   bookCard.classList.add("card");
   bookCard.setAttribute("id", book.title.split(" ").join(""));
+  const removeButton = document.createElement("button");
+  removeButton.classList.add("close_button");
+  removeButton.setAttribute("title", "Remove book from library")
+  removeButton.textContent = "X";
   const bookTitle = document.createElement("h2");
   bookTitle.classList.add("book_title");
   bookTitle.textContent = book.title;
@@ -60,7 +64,7 @@ function createBookCard(book) {
   book.read
     ? (bookRead.textContent = "Read")
     : (bookRead.textContent = "Not read yet");
-  bookCard.append(bookTitle, bookAuthor, bookPages, bookRead);
+  bookCard.append(removeButton, bookTitle, bookAuthor, bookPages, bookRead);
   updateLibraryUI(bookCard);
 }
 
@@ -80,7 +84,13 @@ function updateNavLinks() {
     bookList.appendChild(listItem);
   });
 }
-// nav links should change only when the event: library changes its cards changes, so that it shows only the filtered cards
+// TODO: make myLibrary array update (or create a new filtered one), when filtered and update the navLinks accordingly
+// TODO: event listener for remove button -- should also change mylibrary array: PUT LISTENER IN .library WHICH DELEGATES TO ANY REMOVE BUTTON
+// TODO: event listener for toggle un/read
+// TODO: filters (a. #pages, b. author(create list dynamically), c. read status)
+// TODO: search bar ****
+// TODO: edit button that pops dialog with same information, should rewrite object in library
+
 function clearForm() {
   document.querySelector("#title").value = "";
   document.querySelector("#author").value = "";
@@ -95,9 +105,7 @@ const exampleBook = {
   read: false,
 };
 
-// Loop through library function
 
-// NEW BOOK button: either form or dialog with each form control or input
 // Card img automatically search for google images and return first image as card background
 
 // Remove, edit and un/read toggle buttons within cards
