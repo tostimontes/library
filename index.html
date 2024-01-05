@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header>The Library</header>
+    <div class="main_container">
+      <nav class="sidebar">
+        <h2>Navigation</h2>
+        <ul class="book_list"></ul>
+      </nav>
+      <main class="library">
+        <div class="card" id="example_card">
+          <h2 class="book_title">Example Title</h2>
+          <h3 class="book_author">Author Smith</h3>
+          <p class="book_pages">254 pages</p>
+          <button class="read_status">Read</button>
+        </div>
+        <dialog id="book_form_dialog">
+          <form action="" method="dialog" id="book_form">
+            <p>Please introduce the book data:</p>
+            <button id="close_dialog">X</button><label for="title">Title</label
+            ><input type="text" id="title" name="title" required/><label
+              for="author"
+            >Author</label
+            ><input type="text" id="author" name="author" required/><label
+              for="pages"
+            >Number of pages</label
+            ><input type="number" id="pages" name="pages" required/><div class="read_box">
+                <label
+                  for="read"
+                >Have you read it?</label
+                ><input type="checkbox" id="read" name="read" />
+            </div>
+          </form>
+        </dialog>
+        <button id="add_new_book">+</button>
+      </main>
+      <!-- Add Sort, Filter by [...], show/hide, search bar with input listener  -->
+      <div class="controls"></div>
+      <div id="photo_credit">
+        Foto de
+        <a
+          href="https://unsplash.com/es/@six_impossible_things?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+          >Alice</a
+        >
+        en
+        <a
+          href="https://unsplash.com/es/fotos/textil-floral-blanco-marron-y-verde-jy4oF77LQmM?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+          >Unsplash</a
+        >
+      </div>
+    </div>
+  </body>
+</html>

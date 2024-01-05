@@ -1,0 +1,187 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-size: 1.6rem;
+}
+
+header {
+  width: 100%;
+  height: 10rem;
+  position: sticky;
+  top: 0;
+  background: darkred;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: burlywood;
+  font-size: 5.2rem;
+  font-weight: bold;
+  font-family: "Baskerville", "Palatino Linotype", "Century Schoolbook L",
+    "Times New Roman", "serif";
+  letter-spacing: 0.7rem;
+  text-transform: uppercase;
+  text-shadow:
+    0.1rem 0.1rem 0.6px #a67b5b,
+    -0.1rem -0.1rem 0.5px #3f0000;
+}
+
+.main_container {
+  width: 100%;
+  height: calc(100vh - 10rem);
+  display: flex;
+  background:
+    linear-gradient(to top, rgba(0, 98, 3, 0.226), rgba(0, 0, 0, 0.5)),
+    url(../media/mosaic-bg.jpg) center / cover no-repeat;
+}
+
+.sidebar {
+  width: 20%;
+  height: calc(100vh - 10rem);
+  position: sticky;
+  top: 10rem;
+  background-color: #6e381fb9;
+  padding: 3rem;
+  color: blanchedalmond;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.library {
+  width: 60%;
+  position: relative;
+  display: grid;
+  padding: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 25rem));
+  gap: 3rem;
+}
+
+#book_form_dialog {
+  /* display: block; */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 1.3rem;
+}
+
+#book_form {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #3f0000b9;
+  padding: 3rem 5rem 3rem 3rem;
+  border-radius: 1.3rem;
+  box-shadow: 3px 3px 3px black;
+  & p {
+    color: burlywood;
+    font-weight: bold;
+  }
+  & label {
+    color: burlywood;
+    letter-spacing: 0.2rem;
+  }
+  & input {
+    background-color: #a67b5b90;
+    font-size: 2.2rem;
+    height: 4rem;
+    padding: 1rem;
+    color: burlywood;
+    font-family: inherit;
+    &[type="number"] {
+      width: 9rem;
+      overflow: scroll;
+    }
+  }
+  & button {
+    cursor: pointer;
+    background-color: burlywood;
+    outline: none;
+    width: 2.3rem;
+    height: 2.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3f0000;
+    border: 0;
+    border-radius: 50%;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+  > .read_box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+#photo_credit {
+  font-family: "Baskerville", "Palatino Linotype", "Century Schoolbook L",
+    "Times New Roman", "serif";
+  position: fixed;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+  color: darkred;
+  & a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.card {
+  background-color: #b92828c9;
+  padding: 1.7rem;
+  height: 20rem;
+  border: 2px solid #a67b5b;
+  border-radius: 0.7rem;
+  box-shadow: 0.3rem 0.3rem 10px black;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  position: relative;
+  color: burlywood;
+  > button {
+    position: absolute;
+    bottom: 1.7rem;
+    right: 1.7rem;
+    cursor: pointer;
+  }
+}
+
+#add_new_book {
+  background-color: #a67b5b;
+  width: 7rem;
+  height: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: burlywood;
+  font-size: 7.6rem;
+  font-weight: bold;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 10px black;
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+}
+
+.controls {
+  width: 20%;
+  height: calc(100vh - 10rem);
+  background-color: #a67b5bc4;
+}
