@@ -6,7 +6,7 @@ function Book(title, author, pages, read) {
 }
 // Add sorting functionality
 
-const myLibrary = [];
+const myLibraryArray = [];
 const libraryTitleNames = [];
 const addBookButton = document.getElementById("add_new_book");
 const dialog = document.querySelector("#book_form_dialog");
@@ -15,6 +15,7 @@ const closeDialogButton = document.querySelector("#close_dialog");
 const submitBook = document.querySelector("#form_submit");
 const libraryUI = document.querySelector(".library");
 const bookList = document.querySelector(".book_list");
+
 closeDialogButton.addEventListener("click", () => {
   dialog.close();
 });
@@ -27,6 +28,23 @@ addBookButton.addEventListener("click", () => {
   dialog.showModal();
 });
 
+libraryUI.addEventListener("click", (e) => {
+  if (e.target.matches(".close_button")) {
+    removeBookFromLibrary(e.target.parentElement);
+  } 
+});
+
+// MutationObserver for watching changes in the library and update arrays
+const observer = new MutationObserver(function (mutationsList) {
+  for (const mutation of mutationsList) {
+    if (mutation.type === "childList") {
+      updateNavLinks();
+      addBookToLibrary();
+      // addition and removal of cards is dealt with specidific functions, but this should also change the myLibraryArray array in JS (for search and filter purposes). It should also change the navlinks
+    }
+  }
+})
+// add new book listener
 submitBook.addEventListener("click", () => {
   const newTitle = document.getElementById("title").value;
   const newAuthor = document.getElementById("author").value;
@@ -34,7 +52,7 @@ submitBook.addEventListener("click", () => {
   let newRead = document.getElementById("read").checked;
 
   const newBook = new Book(newTitle, newAuthor, newPages, newRead);
-  myLibrary.push(newBook);
+  myLibraryArray.push(newBook);
   libraryTitleNames.push(newTitle);
   createBookCard(newBook);
   clearForm();
@@ -45,6 +63,7 @@ function createBookCard(book) {
   const bookCard = document.createElement("div");
   bookCard.classList.add("card");
   bookCard.setAttribute("id", book.title.split(" ").join(""));
+  bookCard.setAttribute("data-value", book.title);
   const removeButton = document.createElement("button");
   removeButton.classList.add("close_button");
   removeButton.setAttribute("title", "Remove book from library")
@@ -65,27 +84,47 @@ function createBookCard(book) {
     ? (bookRead.textContent = "Read")
     : (bookRead.textContent = "Not read yet");
   bookCard.append(removeButton, bookTitle, bookAuthor, bookPages, bookRead);
-  updateLibraryUI(bookCard);
+  addBookToLibrary(bookCard);
 }
 
-function updateLibraryUI(card) {
+function removeBookFromLibrary(card) {
+  const indexForRemoval = myLibraryArray.findIndex((book) => book.title === card.dataset.value);
+  myLibraryArray.splice(indexForRemoval, 1);
+  libraryUI.removeChild(card);
+  removeNavLink(card);
+}
+
+
+
+function addBookToLibrary(card) {
   libraryUI.appendChild(card);
-  updateNavLinks();
+  addNavLink(card);
 }
 
-function updateNavLinks() {
-  myLibrary.forEach((book) => {
-    const listItem = document.createElement("li");
-    const anchor = document.createElement("a");
-    anchor.textContent = book.title;
-    anchor.setAttribute("href", `#${book.title.split(" ").join("")}`);
-    anchor.classList.add("nav_link");
-    listItem.appendChild(anchor);
-    bookList.appendChild(listItem);
-  });
+function addNavLink(card) {
+  const listItem = document.createElement("li");
+  const anchor = document.createElement("a");
+  anchor.textContent = card.children[1].textContent;
+  anchor.setAttribute(
+    "href",
+    `#${card.children[1].textContent.split(" ").join("")}`
+  );
+  anchor.classList.add("nav_link");
+  listItem.appendChild(anchor);
+  bookList.appendChild(listItem);
 }
-// TODO: make myLibrary array update (or create a new filtered one), when filtered and update the navLinks accordingly
-// TODO: event listener for remove button -- should also change mylibrary array: PUT LISTENER IN .library WHICH DELEGATES TO ANY REMOVE BUTTON
+
+function removeNavLink(card) {
+  const linkToRemove = bookList.querySelector(
+    `a[href="#${card.dataset.value}"`
+  );
+  
+  if (linkToRemove) {
+    linkToRemove.parentElement.remove();
+  };
+}
+
+// TODO: make myLibraryArray array update (or create a new filtered one), when filtered and update the navLinks accordingly
 // TODO: event listener for toggle un/read
 // TODO: filters (a. #pages, b. author(create list dynamically), c. read status)
 // TODO: search bar ****
