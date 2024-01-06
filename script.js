@@ -4,7 +4,7 @@ function Book(title, author, pages, read) {
   this.pages = pages;
   this.read = read;
 }
-// Add sorting functionality
+
 let editMode = false;
 let bookInEdition;
 let cardInEdition;
@@ -92,7 +92,7 @@ submitBook.addEventListener("click", () => {
 submitEdit.addEventListener("click", () => {
   // Change the array index object and then apply changes to the card
   editBookCard(cardInEdition);
-
+  adjustFontSizeToFit(cardInEdition.querySelector(".book_title"));
   clearEditForm();
   editDialog.close();
 });
@@ -161,6 +161,7 @@ function editBookCard(card) {
 }
 function addBookToLibrary(card) {
   libraryUI.appendChild(card);
+  adjustFontSizeToFit(card.querySelector(".book_title"));
   addNavLink(card);
 }
 
@@ -224,8 +225,23 @@ function fillEditDialog(card) {
     : (editDialog.querySelector("#edit_read").checked = false);
 }
 
-// TODO: event listener for toggle un/read
-// TODO: filters (a. #pages, b. author(create list dynamically), c. read status)
+function adjustFontSizeToFit(container) {
+  let contentWidth = container.scrollWidth;
+  let containerWidth = container.clientWidth;
+
+  while (contentWidth > containerWidth && container.style.fontSize !== "0px") {
+    let currentFontSize = parseFloat(
+      window.getComputedStyle(container, null).getPropertyValue("font-size")
+    );
+    container.style.fontSize = currentFontSize - 1 + "px";
+    contentWidth = container.scrollWidth;
+  }
+}
+
+
+// TODO: add authors to author filter and rest of filter funcs
+// TODO: filters (a. #pages (input number), b. author(create list dynamically) (dropdown), c. read status) -- each filter should have a "change" listener
+// TODO: add sorting functionality under filters
 // TODO: search bar ****
 // TODO: make myLibraryArray array update (or create a new filtered one), when filtered and update the navLinks accordingly: change display of filtered <li> elements
 
@@ -243,13 +259,71 @@ function clearEditForm() {
   document.querySelector("#edit_read").checked = false;
 }
 
-const exampleBook = {
-  title: "Example Title",
-  author: "Author Smith",
-  pages: 295,
-  read: false,
-};
 
-// Card img automatically search for google images and return first image as card background
+const exampleArray = [
+  {
+    title: "Pride and Prejudice",
+    author: "Jane Austen",
+    pages: 432,
+    read: false,
+  },
+  {
+    title: "To Kill a Mockingbird",
+    author: "Harper Lee",
+    pages: 281,
+    read: true,
+  },
+  { title: "1984", author: "George Orwell", pages: 328, read: false },
+  {
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
+    pages: 180,
+    read: true,
+  },
+  { title: "Moby-Dick", author: "Herman Melville", pages: 720, read: false },
+  { title: "Jane Eyre", author: "Charlotte Brontë", pages: 500, read: true },
+  {
+    title: "Wuthering Heights",
+    author: "Emily Brontë",
+    pages: 400,
+    read: false,
+  },
+  {
+    title: "Great Expectations",
+    author: "Charles Dickens",
+    pages: 544,
+    read: true,
+  },
+  {
+    title: "Little Women",
+    author: "Louisa May Alcott",
+    pages: 759,
+    read: false,
+  },
+  { title: "Brave New World", author: "Aldous Huxley", pages: 288, read: true },
+  {
+    title: "The Catcher in the Rye",
+    author: "J.D. Salinger",
+    pages: 234,
+    read: false,
+  },
+  {
+    title: "The Adventures of Huckleberry Finn",
+    author: "Mark Twain",
+    pages: 366,
+    read: true,
+  },
+];
 
-// Remove, edit and un/read toggle buttons within cards
+function initializeExampleUI(array) {
+  array.forEach((book) => {
+    const newBook = new Book(book.title, book.author, book.pages, book.read);
+    myLibraryArray.push(newBook);
+    libraryTitleNames.push(newBook.title);
+    createBookCard(newBook);
+    clearForm();
+    dialog.close();
+  });
+}
+
+initializeExampleUI(exampleArray);

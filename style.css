@@ -181,6 +181,11 @@ header {
   gap: 0.7rem;
   position: relative;
   color: burlywood;
+  > .book_title {
+    padding-right: 2.4rem;
+    font-style: italic;
+    font-size: 2.7rem;
+  }
   > .read_status {
     position: absolute;
     bottom: 1.7rem;
@@ -254,4 +259,14 @@ header {
   width: 20%;
   height: calc(100vh - 10rem);
   background-color: #a67b5bc4;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: sticky;
+  top: 10rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: burlywood;
 }

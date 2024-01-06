@@ -15,14 +15,6 @@
         <ul class="book_list"></ul>
       </nav>
       <main class="library">
-        <div class="card" id="example_card" data-value="Example title">
-          <button class="close_button" title="Remove book from library">X</button>
-          <button class="edit_button" title="Edit book info"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>book-edit</title><path d="M19.39 10.74L11 19.13V22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H7V9L9.5 7.5L12 9V2H18C19.1 2 20 2.89 20 4V10.3C19.78 10.42 19.57 10.56 19.39 10.74M13 19.96V22H15.04L21.17 15.88L19.13 13.83L13 19.96M22.85 13.47L21.53 12.15C21.33 11.95 21 11.95 20.81 12.15L19.83 13.13L21.87 15.17L22.85 14.19C23.05 14 23.05 13.67 22.85 13.47Z" /></svg></button>
-          <h2 class="book_title">Example Title</h2>
-          <h3 class="book_author">Author Smith</h3>
-          <p class="book_pages" data-value="254">254 pages</p>
-          <button class="read_status" data-value="true" title="Toggle read status">Read</button>
-        </div>
         <dialog id="book_form_dialog">
           <form action="" method="dialog" id="book_form">
             <p>Please introduce the book data:</p>
@@ -45,13 +37,20 @@
         <dialog id="edit_dialog">
           <form action="" method="dialog" id="edit_form">
             <p>Please introduce the changes:</p>
-            <button id="close_dialog">X</button><label for="edit_title">Title</label
-            ><input type="text" id="edit_title" name="edit_title" required /><label
-              for="edit_author"
-              >Author</label
-            ><input type="text" id="edit_author" name="edit_author" required /><label
-              for="edit_pages"
-              >Number of pages</label
+            <button id="close_dialog">X</button
+            ><label for="edit_title">Title</label
+            ><input
+              type="text"
+              id="edit_title"
+              name="edit_title"
+              required
+            /><label for="edit_author">Author</label
+            ><input
+              type="text"
+              id="edit_author"
+              name="edit_author"
+              required
+            /><label for="edit_pages">Number of pages</label
             ><input type="number" id="edit_pages" name="edit_pages" required />
             <div class="read_box">
               <label for="edit_read">Have you read it?</label
@@ -63,7 +62,24 @@
       </main>
       <button id="add_new_book">+</button>
       <!-- Add Sort, Filter by [...], show/hide, search bar with input listener  -->
-      <div class="controls"></div>
+      <div class="controls">
+        <div class="filter author_filter">Filter by author:
+          <select name="authors" id="author_list"></select>
+        </div>
+        <div class="filter pages_filter">Filter by number of pages: <br>
+          <label for="min_pages">Min:</label>
+          <input type="number" id="min_pages" name="min_pages" />
+          <label for="max_pages">Max:</label>
+          <input type="number" id="max_pages" name="max_pages" />
+        </div>
+        <div class="filter read_filter">Filter by read status:
+          <select name="read_or_not" id="read_or_not_filter">
+            <option value="default">Choose read status</option>
+            <option>Read</option>
+            <option>Not read yet</option>
+          </select>
+        </div>
+      </div>
       <div id="photo_credit">
         Foto de
         <a
