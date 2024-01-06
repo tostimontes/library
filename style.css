@@ -77,7 +77,7 @@ header {
   overflow-y: auto;
 }
 
-#book_form_dialog {
+#book_form_dialog, #edit_dialog {
   /* display: block; */
   position: fixed;
   top: 50%;
@@ -88,7 +88,7 @@ header {
   box-shadow: 3px 3px 3px black;
 }
 
-#book_form {
+#book_form, #edit_form {
   font-family: Georgia, "Times New Roman", Times, serif;
   display: flex;
   flex-direction: column;
@@ -138,7 +138,7 @@ header {
     align-items: center;
     gap: 1rem;
   }
-  & #form_submit {
+  & #form_submit, #edit_submit {
     background-color: burlywood;
     color: #3f0000;
     border: 0;
