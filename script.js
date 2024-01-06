@@ -54,6 +54,13 @@ libraryUI.addEventListener("click", (e) => {
   }
 });
 
+// read/unread toggle
+document.addEventListener("click", (e) => {
+  if (e.target.matches(".read_status")) {
+    toggleReadStatus(e.target);
+  }
+});
+
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && dialog.hasAttribute("open")) {
     clearForm();
@@ -87,7 +94,7 @@ submitEdit.addEventListener("click", () => {
   editBookCard(cardInEdition);
 
   clearEditForm();
-  editDialog.close()
+  editDialog.close();
 });
 // HTML Book Card creation
 function createBookCard(book) {
@@ -116,9 +123,10 @@ function createBookCard(book) {
   const bookRead = document.createElement("button");
   bookRead.classList.add("read_status");
   bookRead.setAttribute("data-value", book.read);
+  bookRead.setAttribute("title", "Toggle read status");
   book.read
-  ? (bookRead.textContent = "Read")
-  : (bookRead.textContent = "Not read yet");
+    ? (bookRead.textContent = "Read")
+    : (bookRead.textContent = "Not read yet");
   bookCard.append(
     removeButton,
     editButton,
@@ -126,31 +134,30 @@ function createBookCard(book) {
     bookAuthor,
     bookPages,
     bookRead
-    );
-    addBookToLibrary(bookCard);
-  }
-  
-  function editBookCard(card) {
-    card.dataset.value = editDialog.querySelector("#edit_title").value;
-    bookTitleInEdition = editDialog.querySelector("#edit_title").value;
-    bookInEdition.title = editDialog.querySelector("#edit_title").value;
-    bookInEdition.author = editDialog.querySelector("#edit_author").value;
-    bookInEdition.pages = editDialog.querySelector("#edit_pages").value;
-    bookInEdition.read = editDialog.querySelector("#edit_read").checked;
-    card.setAttribute("href", `#${bookInEdition.title.split(" ").join("")}`);
-    navLinkInEdition.setAttribute("id", bookInEdition.title.split(" ").join(""));
-    navLinkInEdition.textContent = bookInEdition.title;
-    card.querySelector(".book_title").textContent = bookInEdition.title;
-    card.querySelector(".book_author").textContent = bookInEdition.author;
-    card.querySelector(".book_pages").dataset.value = bookInEdition.pages;
-    card.querySelector(".book_pages").textContent =
-      `${bookInEdition.pages} pages`;
-    card.querySelector(".read_status").dataset.value = bookInEdition.read;
-    card.querySelector(".read_status").textContent = bookInEdition.title;
-    bookInEdition.read
-      ? (card.querySelector(".read_status").textContent = "Read")
-      : (card.querySelector(".read_status").textContent =
-          "Not read yet");
+  );
+  addBookToLibrary(bookCard);
+}
+
+function editBookCard(card) {
+  card.dataset.value = editDialog.querySelector("#edit_title").value;
+  bookTitleInEdition = editDialog.querySelector("#edit_title").value;
+  bookInEdition.title = editDialog.querySelector("#edit_title").value;
+  bookInEdition.author = editDialog.querySelector("#edit_author").value;
+  bookInEdition.pages = editDialog.querySelector("#edit_pages").value;
+  bookInEdition.read = editDialog.querySelector("#edit_read").checked;
+  card.setAttribute("href", `#${bookInEdition.title.split(" ").join("")}`);
+  navLinkInEdition.setAttribute("id", bookInEdition.title.split(" ").join(""));
+  navLinkInEdition.textContent = bookInEdition.title;
+  card.querySelector(".book_title").textContent = bookInEdition.title;
+  card.querySelector(".book_author").textContent = bookInEdition.author;
+  card.querySelector(".book_pages").dataset.value = bookInEdition.pages;
+  card.querySelector(".book_pages").textContent =
+    `${bookInEdition.pages} pages`;
+  card.querySelector(".read_status").dataset.value = bookInEdition.read;
+  card.querySelector(".read_status").textContent = bookInEdition.title;
+  bookInEdition.read
+    ? (card.querySelector(".read_status").textContent = "Read")
+    : (card.querySelector(".read_status").textContent = "Not read yet");
 }
 function addBookToLibrary(card) {
   libraryUI.appendChild(card);
@@ -183,7 +190,6 @@ function addNavLink(card) {
 function removeNavLink(card) {
   const linkToRemove = bookList.querySelector(
     `a[href="#${card.getAttribute("id")}"`
-    
   );
 
   if (linkToRemove) {
@@ -191,8 +197,24 @@ function removeNavLink(card) {
   }
 }
 
+function toggleReadStatus(button) {
+  const readStatusInMyLibrary = myLibraryArray.find(
+    (book) => book.title === `${button.parentElement.dataset.value}`
+  );
+  if (button.dataset.value === "true") {
+    button.dataset.value = "false";
+    readStatusInMyLibrary.read = false;
+    button.textContent = "Not read yet";
+  } else {
+    button.dataset.value = "true";
+    button.textContent = "Read";
+    readStatusInMyLibrary.read = true;
+  }
+}
+
 function fillEditDialog(card) {
-  editDialog.querySelector("#edit_title").value = card.querySelector(".book_title").textContent;
+  editDialog.querySelector("#edit_title").value =
+    card.querySelector(".book_title").textContent;
   editDialog.querySelector("#edit_author").value =
     card.querySelector(".book_author").textContent;
   editDialog.querySelector("#edit_pages").value =
@@ -202,8 +224,6 @@ function fillEditDialog(card) {
     : (editDialog.querySelector("#edit_read").checked = false);
 }
 
-// TODO: edit button that pops dialog with same information, should rewrite object in library
-// TODO: erase all form controls when ESC || saved || edited
 // TODO: event listener for toggle un/read
 // TODO: filters (a. #pages, b. author(create list dynamically), c. read status)
 // TODO: search bar ****
