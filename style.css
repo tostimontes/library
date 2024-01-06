@@ -85,6 +85,7 @@ header {
   transform: translate(-50%, -50%);
   border: 0;
   border-radius: 1.3rem;
+  box-shadow: 3px 3px 3px black;
 }
 
 #book_form {
@@ -186,7 +187,7 @@ header {
     right: 1.7rem;
     cursor: pointer;
   }
-  > .close_button {
+  > .close_button, .edit_button {
     cursor: pointer;
     background-color: burlywood;
     outline: none;
@@ -199,8 +200,19 @@ header {
     border: 0;
     border-radius: 50%;
     position: absolute;
+    right: 1.5rem;  
+  }
+  > .close_button {
     top: 1.5rem;
-    right: 1.5rem;
+  }
+  > .edit_button {
+    top: 4.5rem;
+    > svg {
+      width: 1.9rem;
+      > path {
+        fill: #3f0000;
+      }
+    }
   }
 }
 
