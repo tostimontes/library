@@ -257,7 +257,8 @@ header {
   box-shadow: 0.3rem 0.3rem 10px black;
   position: absolute;
   bottom: 3rem;
-  right: 29rem;
+  left: -11rem;
+  z-index: 2;
 }
 
 .controls {
