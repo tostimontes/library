@@ -195,7 +195,6 @@ function editBookCard(card) {
   }
 }
 
-// TODO: additive filters
 function addBookToLibrary(card) {
   libraryUI.appendChild(card);
   adjustFontSizeToFit(card.querySelector(".book_title"));

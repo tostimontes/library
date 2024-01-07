@@ -41,7 +41,7 @@ header {
   display: flex;
   background:
     linear-gradient(to top, rgba(0, 98, 3, 0.226), rgba(0, 0, 0, 0.5)),
-    url(../media/mosaic-bg.jpg) center / cover no-repeat;
+    url(./media/mosaic-bg.jpg) center / cover no-repeat;
 }
 
 .sidebar {
