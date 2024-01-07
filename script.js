@@ -247,6 +247,17 @@ function adjustFontSizeToFit(container) {
   }
 }
 
+// filter listeners
+authorFilterDropdown.addEventListener("change", (e) => {
+  const selectedAuthor = e.target.value;
+  const cardsInDisplay = document.querySelectorAll(".card");
+  cardsInDisplay.forEach((card) => {
+    card.style.display = "block";
+    if (card.querySelector(".book_author").textContent !== selectedAuthor) {
+      card.style.display = "none";
+    }
+  });
+})
 
 // TODO: add authors to author filter and rest of filter funcs
 // TODO: filters (a. #pages (input number), b. author(create list dynamically) (dropdown), c. read status) -- each filter should have a "change" listener
