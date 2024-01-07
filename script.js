@@ -183,6 +183,11 @@ function removeBookFromLibrary(card) {
   const indexForRemoval = myLibraryArray.findIndex(
     (book) => book.title === card.dataset.value
   );
+  authorFilterDropdown.removeChild(
+    authorFilterDropdown.querySelector(
+      `option[value="${myLibraryArray[indexForRemoval].author}"]`
+    )
+  );
   myLibraryArray.splice(indexForRemoval, 1);
   libraryTitleNames.splice(indexForRemoval, 1);
   libraryUI.removeChild(card);
