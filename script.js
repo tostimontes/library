@@ -10,6 +10,7 @@ let bookInEdition;
 let cardInEdition;
 let bookTitleInEdition;
 let navLinkInEdition;
+let authorOptionInEdition;
 const myLibraryArray = [];
 const libraryTitleNames = [];
 const addBookButton = document.getElementById("add_new_book");
@@ -21,6 +22,7 @@ const closeDialogButton = document.querySelector("#close_dialog");
 const submitBook = document.querySelector("#form_submit");
 const libraryUI = document.querySelector(".library");
 const bookList = document.querySelector(".book_list");
+const authorFilterDropdown = document.querySelector("#author_list");
 
 closeDialogButton.addEventListener("click", () => {
   clearForm();
@@ -50,6 +52,9 @@ libraryUI.addEventListener("click", (e) => {
     cardInEdition = editDiv.parentElement;
     navLinkInEdition = bookList.querySelector(
       `a[href="#${cardInEdition.getAttribute("id")}"`
+    );
+    authorOptionInEdition = authorFilterDropdown.querySelector(
+    `option[value="${bookInEdition.author}"]`
     );
   }
 });
@@ -90,7 +95,6 @@ submitBook.addEventListener("click", () => {
 });
 
 submitEdit.addEventListener("click", () => {
-  // Change the array index object and then apply changes to the card
   editBookCard(cardInEdition);
   adjustFontSizeToFit(cardInEdition.querySelector(".book_title"));
   clearEditForm();
@@ -116,6 +120,10 @@ function createBookCard(book) {
   const bookAuthor = document.createElement("h3");
   bookAuthor.classList.add("book_author");
   bookAuthor.textContent = book.author;
+  const authorOption = document.createElement("option");
+  authorOption.textContent = book.author;
+  authorOption.setAttribute("value", `${book.author}`)
+  authorFilterDropdown.appendChild(authorOption);
   const bookPages = document.createElement("p");
   bookPages.classList.add("book_pages");
   bookPages.setAttribute("data-value", book.pages);
@@ -150,6 +158,7 @@ function editBookCard(card) {
   navLinkInEdition.textContent = bookInEdition.title;
   card.querySelector(".book_title").textContent = bookInEdition.title;
   card.querySelector(".book_author").textContent = bookInEdition.author;
+  authorOptionInEdition.textContent = bookInEdition.author;
   card.querySelector(".book_pages").dataset.value = bookInEdition.pages;
   card.querySelector(".book_pages").textContent =
     `${bookInEdition.pages} pages`;

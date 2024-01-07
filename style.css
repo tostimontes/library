@@ -269,4 +269,8 @@ header {
   font-weight: bold;
   font-size: 1.8rem;
   color: burlywood;
+  & .filter {
+    display: flex;
+    flex-direction: column;
+  }
 }
