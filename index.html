@@ -64,13 +64,15 @@
       <!-- Add Sort, Filter by [...], show/hide, search bar with input listener  -->
       <div class="controls">
         <div class="filter author_filter">Filter by author:
-          <select name="authors" id="author_list"></select>
+          <select name="authors" id="author_list">
+            <option value="All authors">All authors</option>
+          </select>
         </div>
         <div class="filter pages_filter">Filter by number of pages: <br>
           <label for="min_pages">Min:</label>
-          <input type="number" id="min_pages" name="min_pages" />
+          <input type="number" id="min_pages" name="min_pages" min="0"/>
           <label for="max_pages">Max:</label>
-          <input type="number" id="max_pages" name="max_pages" />
+          <input type="number" id="max_pages" name="max_pages" min="0"/>
         </div>
         <div class="filter read_filter">Filter by read status:
           <select name="read_or_not" id="read_or_not_filter">

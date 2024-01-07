@@ -23,6 +23,8 @@ const submitBook = document.querySelector("#form_submit");
 const libraryUI = document.querySelector(".library");
 const bookList = document.querySelector(".book_list");
 const authorFilterDropdown = document.querySelector("#author_list");
+const minInput = document.querySelector("#min_pages");
+const maxInput = document.querySelector("#max_pages");
 
 closeDialogButton.addEventListener("click", () => {
   clearForm();
@@ -54,7 +56,7 @@ libraryUI.addEventListener("click", (e) => {
       `a[href="#${cardInEdition.getAttribute("id")}"`
     );
     authorOptionInEdition = authorFilterDropdown.querySelector(
-    `option[value="${bookInEdition.author}"]`
+      `option[value="${bookInEdition.author}"]`
     );
   }
 });
@@ -122,7 +124,7 @@ function createBookCard(book) {
   bookAuthor.textContent = book.author;
   const authorOption = document.createElement("option");
   authorOption.textContent = book.author;
-  authorOption.setAttribute("value", `${book.author}`)
+  authorOption.setAttribute("value", `${book.author}`);
   authorFilterDropdown.appendChild(authorOption);
   const bookPages = document.createElement("p");
   bookPages.classList.add("book_pages");
@@ -249,15 +251,44 @@ function adjustFontSizeToFit(container) {
 
 // filter listeners
 authorFilterDropdown.addEventListener("change", (e) => {
-  const selectedAuthor = e.target.value;
   const cardsInDisplay = document.querySelectorAll(".card");
+  const selectedAuthor = e.target.value;
   cardsInDisplay.forEach((card) => {
+    if (selectedAuthor === "All authors") {
+      card.style.display = "block";
+      return;
+    }
     card.style.display = "block";
     if (card.querySelector(".book_author").textContent !== selectedAuthor) {
       card.style.display = "none";
     }
   });
-})
+});
+
+minInput.addEventListener("input", () => {
+  const cardsInDisplay = document.querySelectorAll(".card");
+  const minPages = Number(minInput.value);
+  cardsInDisplay.forEach((card) => {
+    card.style.display = "block";
+    if (card.querySelector(".book_pages").dataset.value < minPages) {
+      card.style.display = "none";
+    }
+  });
+});
+
+maxInput.addEventListener("input", () => {
+  if (maxInput.value === "") {
+    return;
+  }
+  const cardsInDisplay = document.querySelectorAll(".card");
+  const maxPages = Number(maxInput.value);
+  cardsInDisplay.forEach((card) => {
+    card.style.display = "block";
+    if (card.querySelector(".book_pages").dataset.value > maxPages) {
+      card.style.display = "none";
+    }
+  });
+});
 
 // TODO: add authors to author filter and rest of filter funcs
 // TODO: filters (a. #pages (input number), b. author(create list dynamically) (dropdown), c. read status) -- each filter should have a "change" listener
@@ -278,7 +309,6 @@ function clearEditForm() {
   document.querySelector("#edit_pages").value = null;
   document.querySelector("#edit_read").checked = false;
 }
-
 
 const exampleArray = [
   {

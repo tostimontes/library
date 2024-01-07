@@ -273,4 +273,6 @@ header {
     display: flex;
     flex-direction: column;
   }
+  & input[type="number"] {
+    width: 6rem;
 }
