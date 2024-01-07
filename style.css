@@ -53,6 +53,7 @@ header {
   padding: 3rem;
   color: blanchedalmond;
   font-family: Georgia, "Times New Roman", Times, serif;
+  overflow: auto;
 }
 
 .book_list {

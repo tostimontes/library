@@ -125,10 +125,16 @@ function createBookCard(book) {
   const bookAuthor = document.createElement("h3");
   bookAuthor.classList.add("book_author");
   bookAuthor.textContent = book.author;
-  const authorOption = document.createElement("option");
-  authorOption.textContent = book.author;
-  authorOption.setAttribute("value", `${book.author}`);
-  authorFilterDropdown.appendChild(authorOption);
+  if (
+    !authorFilterDropdown.contains(
+      authorFilterDropdown.querySelector(`option[value="${book.author}"]`)
+    )
+  ) {
+    const authorOption = document.createElement("option");
+    authorOption.textContent = book.author;
+    authorOption.setAttribute("value", `${book.author}`);
+    authorFilterDropdown.appendChild(authorOption);
+  }
   const bookPages = document.createElement("p");
   bookPages.classList.add("book_pages");
   bookPages.setAttribute("data-value", book.pages);
@@ -158,9 +164,11 @@ function editBookCard(card) {
   bookInEdition.author = editDialog.querySelector("#edit_author").value;
   bookInEdition.pages = editDialog.querySelector("#edit_pages").value;
   bookInEdition.read = editDialog.querySelector("#edit_read").checked;
+  // set edited nav link
   card.setAttribute("href", `#${bookInEdition.title.split(" ").join("")}`);
   navLinkInEdition.setAttribute("id", bookInEdition.title.split(" ").join(""));
   navLinkInEdition.textContent = bookInEdition.title;
+  // set card's edited contents
   card.querySelector(".book_title").textContent = bookInEdition.title;
   card.querySelector(".book_author").textContent = bookInEdition.author;
   authorOptionInEdition.textContent = bookInEdition.author;
@@ -172,7 +180,22 @@ function editBookCard(card) {
   bookInEdition.read
     ? (card.querySelector(".read_status").textContent = "Read")
     : (card.querySelector(".read_status").textContent = "Not read yet");
+  // if any filter is set to a value other than default, check whether the edited card should display
+  // TODO: maxinputvalue should not run if nothing selected
+  // FIX: author change
+  if (
+    authorFilterDropdown.value !== bookInEdition.author ||
+    Number(minInput.value) > bookInEdition.pages ||
+    (Number(maxInput.value) < bookInEdition.pages &&
+      Number(maxInput.value) === 0) ||
+    (readFilter.value !== "default" &&
+      readFilter.value !== `${bookInEdition.read}`)
+  ) {
+    card.style.display = "none";
+  }
 }
+
+// TODO: additive filters
 function addBookToLibrary(card) {
   libraryUI.appendChild(card);
   adjustFontSizeToFit(card.querySelector(".book_title"));
@@ -380,16 +403,10 @@ resetFiltersButton.addEventListener("click", () => {
   cardsInDisplay.forEach((card) => {
     card.style.display = "block";
   });
-})
+});
 
-
-
-// TODO: add authors to author filter and rest of filter funcs
-// TODO: filters (a. #pages (input number), b. author(create list dynamically) (dropdown), c. read status) -- each filter should have a "change" listener
-// TODO: add sorting functionality under filters
-// TODO: update UI according to filters in place when cards info changes
+// TODO: update UI (filtered content and sorted order) according to filters in place when cards info changes: page changes, title, read status
 // TODO: search bar ****
-// TODO: make myLibraryArray array update (or create a new filtered one), when filtered and update the navLinks accordingly: change display of filtered <li> elements
 
 function clearForm() {
   document.querySelector("#title").value = "";
@@ -458,6 +475,93 @@ const exampleArray = [
     pages: 366,
     read: true,
   },
+  {
+    title: "Crime and Punishment",
+    author: "Fyodor Dostoevsky",
+    pages: 430,
+    read: true,
+  },
+  { title: "War and Peace", author: "Leo Tolstoy", pages: 1225, read: false },
+  { title: "Anna Karenina", author: "Leo Tolstoy", pages: 864, read: false },
+  {
+    title: "The Brothers Karamazov",
+    author: "Fyodor Dostoevsky",
+    pages: 824,
+    read: true,
+  },
+  { title: "The Idiot", author: "Fyodor Dostoevsky", pages: 656, read: true },
+  {
+    title: "Don Quixote",
+    author: "Miguel de Cervantes",
+    pages: 992,
+    read: false,
+  },
+  {
+    title: "One Hundred Years of Solitude",
+    author: "Gabriel García Márquez",
+    pages: 417,
+    read: true,
+  },
+  {
+    title: "Love in the Time of Cholera",
+    author: "Gabriel García Márquez",
+    pages: 348,
+    read: false,
+  },
+  { title: "Invisible Man", author: "Ralph Ellison", pages: 581, read: true },
+  { title: "Ulysses", author: "James Joyce", pages: 730, read: false },
+  { title: "Dubliners", author: "James Joyce", pages: 224, read: true },
+  {
+    title: "A Portrait of the Artist as a Young Man",
+    author: "James Joyce",
+    pages: 299,
+    read: false,
+  },
+  {
+    title: "Madame Bovary",
+    author: "Gustave Flaubert",
+    pages: 329,
+    read: true,
+  },
+  { title: "Lolita", author: "Vladimir Nabokov", pages: 336, read: false },
+  { title: "Pnin", author: "Vladimir Nabokov", pages: 208, read: true },
+  { title: "Pale Fire", author: "Vladimir Nabokov", pages: 315, read: false },
+  { title: "Middlemarch", author: "George Eliot", pages: 904, read: true },
+  { title: "Rebecca", author: "Daphne du Maurier", pages: 448, read: false },
+  { title: "Frankenstein", author: "Mary Shelley", pages: 280, read: true },
+  { title: "Dracula", author: "Bram Stoker", pages: 418, read: false },
+  {
+    title: "The Picture of Dorian Gray",
+    author: "Oscar Wilde",
+    pages: 254,
+    read: true,
+  },
+  {
+    title: "A Tale of Two Cities",
+    author: "Charles Dickens",
+    pages: 544,
+    read: false,
+  },
+  { title: "Oliver Twist", author: "Charles Dickens", pages: 554, read: true },
+  {
+    title: "David Copperfield",
+    author: "Charles Dickens",
+    pages: 882,
+    read: false,
+  },
+  { title: "Bleak House", author: "Charles Dickens", pages: 1017, read: true },
+  { title: "Hard Times", author: "Charles Dickens", pages: 352, read: false },
+  { title: "The Stranger", author: "Albert Camus", pages: 123, read: true },
+  { title: "The Plague", author: "Albert Camus", pages: 308, read: false },
+  { title: "The Fall", author: "Albert Camus", pages: 147, read: true },
+  { title: "Fahrenheit 451", author: "Ray Bradbury", pages: 158, read: false },
+  {
+    title: "The Martian Chronicles",
+    author: "Ray Bradbury",
+    pages: 222,
+    read: true,
+  },
+  { title: "Dune", author: "Frank Herbert", pages: 688, read: false },
 ];
 
 function initializeExampleUI(array) {
