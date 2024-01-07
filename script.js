@@ -25,6 +25,7 @@ const bookList = document.querySelector(".book_list");
 const authorFilterDropdown = document.querySelector("#author_list");
 const minInput = document.querySelector("#min_pages");
 const maxInput = document.querySelector("#max_pages");
+const readFilter = document.querySelector("#read_or_not_filter");
 
 closeDialogButton.addEventListener("click", () => {
   clearForm();
@@ -290,9 +291,25 @@ maxInput.addEventListener("input", () => {
   });
 });
 
+readFilter.addEventListener("change", (e) => {
+  const chosenStatus = e.target.value;
+  const cardsInDisplay = document.querySelectorAll(".card");
+  cardsInDisplay.forEach((card) => {
+    card.style.display = "block";
+    if (chosenStatus === "default") {
+      return;
+    }
+    if (card.querySelector(".read_status").dataset.value !== chosenStatus) {
+      card.style.display = "none";
+    }
+  });
+})
+
+
 // TODO: add authors to author filter and rest of filter funcs
 // TODO: filters (a. #pages (input number), b. author(create list dynamically) (dropdown), c. read status) -- each filter should have a "change" listener
 // TODO: add sorting functionality under filters
+// TODO: update UI according to filters in place when cards info changes
 // TODO: search bar ****
 // TODO: make myLibraryArray array update (or create a new filtered one), when filtered and update the navLinks accordingly: change display of filtered <li> elements
 
