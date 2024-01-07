@@ -26,6 +26,8 @@ const authorFilterDropdown = document.querySelector("#author_list");
 const minInput = document.querySelector("#min_pages");
 const maxInput = document.querySelector("#max_pages");
 const readFilter = document.querySelector("#read_or_not_filter");
+const sortDropdown = document.querySelector("#sort_options");
+const resetFiltersButton = document.querySelector("#reset_filters");
 
 closeDialogButton.addEventListener("click", () => {
   clearForm();
@@ -303,7 +305,78 @@ readFilter.addEventListener("change", (e) => {
       card.style.display = "none";
     }
   });
+});
+
+sortDropdown.addEventListener("change", (e) => {
+  const chosenSortingOption = e.target.value;
+  const cardsInDisplay = document.querySelectorAll(".card");
+  const cardsArray = Array.from(cardsInDisplay);
+  switch (chosenSortingOption) {
+    case "title ascending":
+      cardsArray.sort((a, b) =>
+        a
+          .querySelector(".book_title")
+          .textContent.localeCompare(b.querySelector(".book_title").textContent)
+      );
+      break;
+    case "title descending":
+      cardsArray.sort((a, b) =>
+        b
+          .querySelector(".book_title")
+          .textContent.localeCompare(a.querySelector(".book_title").textContent)
+      );
+      break;
+    case "author ascending":
+      cardsArray.sort((a, b) =>
+        a
+          .querySelector(".book_author")
+          .textContent.localeCompare(
+            b.querySelector(".book_author").textContent
+          )
+      );
+      break;
+    case "author descending":
+      cardsArray.sort((a, b) =>
+        b
+          .querySelector(".book_author")
+          .textContent.localeCompare(
+            a.querySelector(".book_author").textContent
+          )
+      );
+      break;
+    case "pages ascending":
+      cardsArray.sort(
+        (a, b) =>
+          a.querySelector(".book_pages").dataset.value -
+          b.querySelector(".book_pages").dataset.value
+      );
+      break;
+    case "pages descending":
+      cardsArray.sort(
+        (a, b) =>
+          b.querySelector(".book_pages").dataset.value -
+          a.querySelector(".book_pages").dataset.value
+      );
+      break;
+  }
+  libraryUI.innerHTML = "";
+  cardsArray.forEach((card) => {
+    libraryUI.appendChild(card);
+  });
+});
+
+resetFiltersButton.addEventListener("click", () => {
+  authorFilterDropdown.value = "All authors";
+  minInput.value = "";
+  maxInput.value = "";
+  readFilter.value = "default";
+  sortDropdown.value = "default";
+  const cardsInDisplay = document.querySelectorAll(".card");
+  cardsInDisplay.forEach((card) => {
+    card.style.display = "block";
+  });
 })
+
 
 
 // TODO: add authors to author filter and rest of filter funcs
@@ -331,7 +404,7 @@ const exampleArray = [
   {
     title: "Pride and Prejudice",
     author: "Jane Austen",
-    pages: 432,
+    pages: 430,
     read: false,
   },
   {
