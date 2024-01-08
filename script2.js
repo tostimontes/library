@@ -121,7 +121,9 @@ document.addEventListener("click", (e) => {
     const newAuthor = document.getElementById("author").value;
     const newPages = document.getElementById("pages").value;
     let newRead;
-    document.getElementById("read").checked ? newRead = false: newRead = true;
+    document.getElementById("read").checked
+      ? (newRead = false)
+      : (newRead = true);
 
     myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
   }
@@ -142,7 +144,6 @@ function updateUI(library) {
     sortingParameter: sortDropdown.value,
   };
   authorFilterDropdown.innerHTML = "";
-  // INSERT "All authors" default option here
   for (const book of library) {
     createBookCard(book);
   }
@@ -153,7 +154,6 @@ function updateUI(library) {
   maxInput.value = filterSettings.maxPages;
   readFilter.value = filterSettings.readFilterValue;
   sortDropdown.value = filterSettings.sortingParameter;
-  // TODO: either take sortAuthors out and replace the All authors above OR modify sortinf of authors to remember pre edit filters
   sortAuthors();
   checkFilters();
 }
@@ -228,7 +228,6 @@ function createBookCard(book) {
 }
 
 function openEditDialog(card) {
-  // TODO: before editing, to not restore filter author by sortAuthors, record filter values. IT ONLY FUCKS WITH THE AUTHOR, OTHER FILTERS UNALTERED BY EDITIONS, because sortAuthors only messes with the author dropdown 
   authorFilterValue = authorFilterDropdown.value;
 
   editMode = true;
@@ -320,6 +319,10 @@ function checkFilters() {
     default:
       break;
   }
+  libraryUI.innerHTML = "";
+  cardsArray.forEach((card) => {
+    libraryUI.appendChild(card);
+  });
 
   // apply filters
   for (const card of cardsArray) {
