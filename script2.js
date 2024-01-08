@@ -15,12 +15,14 @@ function Library() {
 
   this.addNewBook = (title, author, pages, read) => {
     if (editMode) {
-        // TODO: editing fine, just add automatic sort to navlinks and authordropdown in updateUI 
+      // TODO: editing fine, just add automatic sort to navlinks and authordropdown in updateUI
       this.removeBook(bookInEditionIndex);
     }
     const newBook = new Book(title, author, pages, read);
     this.books.push(newBook);
     updateUI(this.books);
+    clearForm();
+    dialog.close();
     editMode = false;
   };
 
@@ -31,7 +33,6 @@ function Library() {
 }
 // GLOBAL VARIABLES
 const myLibrary = new Library();
-
 
 // SELECTORS
 
@@ -143,16 +144,30 @@ document.addEventListener("keydown", (e) => {
 function updateUI(library) {
   libraryUI.innerHTML = "";
   bookList.innerHTML = "";
-//   TODO: Record filtered status for below vvvvvvv
+
+  // Get filter settings before erasing
+  const filterSettings = {
+    authorFilterValue: authorFilterDropdown.value,
+    minPages: minInput.value,
+    maxPages: maxInput.value,
+    readFilterValue: readFilter.value,
+    sortingParameter: sortDropdown.value,
+  };
   authorFilterDropdown.innerHTML = "";
   const allAuthorsOption = document.createElement("option");
   allAuthorsOption.setAttribute("data-value", "All authors");
   allAuthorsOption.textContent = "All authors";
   authorFilterDropdown.appendChild(allAuthorsOption);
   for (const book of library) {
-      createBookCard(book);
-    }
-    // ^^^^^^^ Fetch and append in-place filters before repopulating UI, so that editions do not reset filters
+    createBookCard(book);
+  }
+
+  // Set filters again
+  authorFilterDropdown.value = filterSettings.authorFilterValue;
+  minInput.value = filterSettings.minPages;
+  maxInput.value = filterSettings.maxPages;
+  readFilter.value = filterSettings.readFilterValue;
+  sortDropdown.value = filterSettings.sortingParameter;
   checkFilters();
 }
 
@@ -337,6 +352,11 @@ function adjustFontSizeToFit(container) {
     container.style.fontSize = currentFontSize - 1 + "px";
     contentWidth = container.scrollWidth;
   }
+}
+
+function sortAuthors() {
+  const authorFilterOptionsArray = Array.from(authorFilterDropdown.querySelectorAll("option"));
+  
 }
 
 // Example initialization
