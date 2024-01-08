@@ -83,12 +83,25 @@ libraryUI.addEventListener("click", (e) => {
   openEditDialog(cardInEdition);
 });
 
-// REMOVE button listener
+// REMOVE && TOGGLE READ buttons listeners
 libraryUI.addEventListener("click", (e) => {
-  if (e.target.matches(".close_button")) {
+  if (e.target.matches(".read_status")) {
+    openEditDialog(e.target.parentElement);
+    const newTitle = document.getElementById("title").value;
+    const newAuthor = document.getElementById("author").value;
+    const newPages = document.getElementById("pages").value;
+    let newRead;
+    document.getElementById("read").checked
+      ? (newRead = false)
+      : (newRead = true);
+
+    myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
+  } else if (e.target.matches(".close_button")) {
     const indexForRemoval = myLibrary.books.findIndex(
       (book) => book.title === e.target.parentElement.dataset.value
     );
+    authorFilterValue = authorFilterDropdown.value;
+    editMode = true;
     myLibrary.removeBook(indexForRemoval);
   }
 });
@@ -111,21 +124,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && dialog.hasAttribute("open")) {
     clearForm();
     dialog.close();
-  }
-});
-
-document.addEventListener("click", (e) => {
-  if (e.target.matches(".read_status")) {
-    openEditDialog(e.target.parentElement);
-    const newTitle = document.getElementById("title").value;
-    const newAuthor = document.getElementById("author").value;
-    const newPages = document.getElementById("pages").value;
-    let newRead;
-    document.getElementById("read").checked
-      ? (newRead = false)
-      : (newRead = true);
-
-    myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
   }
 });
 
