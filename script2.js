@@ -2,6 +2,7 @@
 let bookInEdition;
 let bookInEditionIndex;
 let editMode = false;
+let authorFilterValue;
 
 function Book(title = "Unknown", author = "Unknown", pages = 0, read = false) {
   this.title = title;
@@ -15,7 +16,6 @@ function Library() {
 
   this.addNewBook = (title, author, pages, read) => {
     if (editMode) {
-      // TODO: editing fine, just add automatic sort to navlinks and authordropdown in updateUI
       this.removeBook(bookInEditionIndex);
     }
     const newBook = new Book(title, author, pages, read);
@@ -27,7 +27,6 @@ function Library() {
   };
 
   this.removeBook = (index) => {
-    // TODO: if only author then restar UI with al authors
     this.books.splice(index, 1);
     updateUI(this.books);
   };
@@ -81,30 +80,7 @@ submitBook.addEventListener("click", () => {
 libraryUI.addEventListener("click", (e) => {
   const editDiv = e.target.closest(".edit_button");
   const cardInEdition = editDiv.parentElement;
-
-  // fetch book reference from library and save in case there's edition
-  if (editDiv) {
-    editMode = true;
-    bookInEdition = myLibrary.books.find(
-      (book) => book.title === cardInEdition.dataset.value
-    );
-    bookInEditionIndex = myLibrary.books.findIndex(
-      (book) => book.title === cardInEdition.dataset.value
-    );
-
-    dialog.showModal();
-
-    // populate form with old values
-    document.getElementById("title").value =
-      cardInEdition.querySelector(".book_title").textContent;
-    document.getElementById("author").value =
-      cardInEdition.querySelector(".book_author").textContent;
-    document.getElementById("pages").value =
-      cardInEdition.querySelector(".book_pages").dataset.value;
-    cardInEdition.querySelector(".read_status").dataset.value === "true"
-      ? (document.getElementById("read").checked = true)
-      : (document.getElementById("read").checked = false);
-  }
+  openEditDialog(cardInEdition);
 });
 
 // REMOVE button listener
@@ -138,7 +114,18 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// TODO: un/read toggle
+document.addEventListener("click", (e) => {
+  if (e.target.matches(".read_status")) {
+    openEditDialog(e.target.parentElement);
+    const newTitle = document.getElementById("title").value;
+    const newAuthor = document.getElementById("author").value;
+    const newPages = document.getElementById("pages").value;
+    let newRead;
+    document.getElementById("read").checked ? newRead = false: newRead = true;
+
+    myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
+  }
+});
 
 // GLOBAL FUNCTIONS
 
@@ -155,6 +142,7 @@ function updateUI(library) {
     sortingParameter: sortDropdown.value,
   };
   authorFilterDropdown.innerHTML = "";
+  // INSERT "All authors" default option here
   for (const book of library) {
     createBookCard(book);
   }
@@ -165,6 +153,7 @@ function updateUI(library) {
   maxInput.value = filterSettings.maxPages;
   readFilter.value = filterSettings.readFilterValue;
   sortDropdown.value = filterSettings.sortingParameter;
+  // TODO: either take sortAuthors out and replace the All authors above OR modify sortinf of authors to remember pre edit filters
   sortAuthors();
   checkFilters();
 }
@@ -236,6 +225,32 @@ function createBookCard(book) {
   // form input info to Book constructor and .push to library
   // WHENEVER A BOOK IS PUSHED ==>>> updateUI
   // erase form
+}
+
+function openEditDialog(card) {
+  // TODO: before editing, to not restore filter author by sortAuthors, record filter values. IT ONLY FUCKS WITH THE AUTHOR, OTHER FILTERS UNALTERED BY EDITIONS, because sortAuthors only messes with the author dropdown 
+  authorFilterValue = authorFilterDropdown.value;
+
+  editMode = true;
+  bookInEdition = myLibrary.books.find(
+    (book) => book.title === card.dataset.value
+  );
+  bookInEditionIndex = myLibrary.books.findIndex(
+    (book) => book.title === card.dataset.value
+  );
+
+  dialog.showModal();
+
+  // populate form with old values
+  document.getElementById("title").value =
+    card.querySelector(".book_title").textContent;
+  document.getElementById("author").value =
+    card.querySelector(".book_author").textContent;
+  document.getElementById("pages").value =
+    card.querySelector(".book_pages").dataset.value;
+  card.querySelector(".read_status").dataset.value === "true"
+    ? (document.getElementById("read").checked = true)
+    : (document.getElementById("read").checked = false);
 }
 
 function clearForm() {
@@ -368,6 +383,9 @@ function sortAuthors() {
     optionElement.setAttribute("data-value", `${option.innerText}`);
     optionElement.textContent = option.innerText;
     authorFilterDropdown.appendChild(optionElement);
+  }
+  if (editMode) {
+    authorFilterDropdown.value = authorFilterValue;
   }
 }
 
