@@ -6,6 +6,7 @@ I tried to experiment with some additional filtering and sorting functionalities
 I then rewrote the whole script again (you can see differences between script.js and script2.js), and by updating the whole UI after any interaction I achieved the filtering and sorting functionality in an intuitive way.
 
 Known issues
+- Grid row gap changes depending on number of children on display
 
 To improve
 - Include animations
