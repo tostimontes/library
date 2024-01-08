@@ -67,8 +67,12 @@ header {
   }
 }
 
-.library {
+.library_container {
   width: 60%;
+}
+
+.library {
+  width: 100%;
   position: relative;
   display: grid;
   padding: 3rem;
@@ -78,9 +82,9 @@ header {
   overflow-y: auto;
 }
 
-#book_form_dialog,
-#edit_dialog {
-  /* display: block; */
+#book_form_dialog {
+  /* display: block;
+  z-index: 3; */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -90,8 +94,7 @@ header {
   box-shadow: 3px 3px 3px black;
 }
 
-#book_form,
-#edit_form {
+#book_form {
   font-family: Georgia, "Times New Roman", Times, serif;
   display: flex;
   flex-direction: column;
@@ -141,8 +144,7 @@ header {
     align-items: center;
     gap: 1rem;
   }
-  & #form_submit,
-  #edit_submit {
+  & #form_submit {
     background-color: burlywood;
     color: #3f0000;
     border: 0;

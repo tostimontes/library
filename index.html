@@ -14,7 +14,8 @@
         <h2>Navigation</h2>
         <ul class="book_list"></ul>
       </nav>
-      <main class="library">
+      <main class="library_container">
+        <div class="library"></div>
         <dialog id="book_form_dialog">
           <form action="" method="dialog" id="book_form">
             <p>Please introduce the book data:</p>
@@ -34,31 +35,6 @@
           </form>
         </dialog>
         <!-- EDIT IDs FOR NON CONFUSION -->
-        <dialog id="edit_dialog">
-          <form action="" method="dialog" id="edit_form">
-            <p>Please introduce the changes:</p>
-            <button id="close_dialog">X</button
-            ><label for="edit_title">Title</label
-            ><input
-              type="text"
-              id="edit_title"
-              name="edit_title"
-              required
-            /><label for="edit_author">Author</label
-            ><input
-              type="text"
-              id="edit_author"
-              name="edit_author"
-              required
-            /><label for="edit_pages">Number of pages</label
-            ><input type="number" id="edit_pages" name="edit_pages" required />
-            <div class="read_box">
-              <label for="edit_read">Have you read it?</label
-              ><input type="checkbox" id="edit_read" name="edit_read" />
-            </div>
-            <button id="edit_submit">Save</button>
-          </form>
-        </dialog>
       </main>
       <!-- Add Sort, Filter by [...], show/hide, search bar with input listener  -->
       <div class="controls">
