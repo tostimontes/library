@@ -27,6 +27,7 @@ function Library() {
   };
 
   this.removeBook = (index) => {
+    // TODO: if only author then restar UI with al authors
     this.books.splice(index, 1);
     updateUI(this.books);
   };
@@ -154,10 +155,6 @@ function updateUI(library) {
     sortingParameter: sortDropdown.value,
   };
   authorFilterDropdown.innerHTML = "";
-  const allAuthorsOption = document.createElement("option");
-  allAuthorsOption.setAttribute("data-value", "All authors");
-  allAuthorsOption.textContent = "All authors";
-  authorFilterDropdown.appendChild(allAuthorsOption);
   for (const book of library) {
     createBookCard(book);
   }
@@ -168,6 +165,7 @@ function updateUI(library) {
   maxInput.value = filterSettings.maxPages;
   readFilter.value = filterSettings.readFilterValue;
   sortDropdown.value = filterSettings.sortingParameter;
+  sortAuthors();
   checkFilters();
 }
 
@@ -355,8 +353,22 @@ function adjustFontSizeToFit(container) {
 }
 
 function sortAuthors() {
-  const authorFilterOptionsArray = Array.from(authorFilterDropdown.querySelectorAll("option"));
-  
+  const authorFilterOptions = authorFilterDropdown.querySelectorAll("option");
+  const authorFilterOptionsArray = Array.from(authorFilterOptions);
+  authorFilterOptionsArray.sort((a, b) =>
+    a.innerText.localeCompare(b.innerText)
+  );
+  authorFilterDropdown.innerHTML = "";
+  const allAuthorsOption = document.createElement("option");
+  allAuthorsOption.setAttribute("data-value", "All authors");
+  allAuthorsOption.textContent = "All authors";
+  authorFilterDropdown.appendChild(allAuthorsOption);
+  for (const option of authorFilterOptionsArray) {
+    const optionElement = document.createElement("option");
+    optionElement.setAttribute("data-value", `${option.innerText}`);
+    optionElement.textContent = option.innerText;
+    authorFilterDropdown.appendChild(optionElement);
+  }
 }
 
 // Example initialization
