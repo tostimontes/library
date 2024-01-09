@@ -359,6 +359,7 @@ function resetFilters() {
   minInput.value = "";
   maxInput.value = "";
   readFilter.value = "default";
+  sortDropdown.value = "default";
   checkFilters();
 }
 
