@@ -2,7 +2,12 @@
 let bookInEdition;
 let bookInEditionIndex;
 let editMode = false;
+// FILTER SETTING RECORDERS
 let authorFilterValue;
+let minPages;
+let maxPages;
+let readFilterValue;
+let sortingParameter;
 
 function Book(title = "Unknown", author = "Unknown", pages = 0, read = false) {
   this.title = title;
@@ -23,7 +28,6 @@ function Library() {
     updateUI(this.books);
     clearForm();
     dialog.close();
-    editMode = false;
   };
 
   this.removeBook = (index) => {
@@ -66,26 +70,18 @@ addBookButton.addEventListener("click", () => {
   dialog.showModal();
 });
 
-// SUBMIT BOOK listener
-submitBook.addEventListener("click", () => {
-  const newTitle = document.getElementById("title").value;
-  const newAuthor = document.getElementById("author").value;
-  const newPages = document.getElementById("pages").value;
-  let newRead = document.getElementById("read").checked;
-
-  myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
-});
-
-// EDIT button listener
+// EDIT && TOGGLE READ && REMOVE buttons listeners
 libraryUI.addEventListener("click", (e) => {
+  let clickedOnBackground = true;
+  // EDIT
   const editDiv = e.target.closest(".edit_button");
-  const cardInEdition = editDiv.parentElement;
-  openEditDialog(cardInEdition);
-});
-
-// REMOVE && TOGGLE READ buttons listeners
-libraryUI.addEventListener("click", (e) => {
-  if (e.target.matches(".read_status")) {
+  if (editDiv !== null) {
+    const cardInEdition = editDiv.parentElement;
+    clickedOnBackground = false;
+    openEditDialog(cardInEdition);
+    // READ TOGGLE
+  } else if (e.target.matches(".read_status")) {
+    clickedOnBackground = false;
     openEditDialog(e.target.parentElement);
     const newTitle = document.getElementById("title").value;
     const newAuthor = document.getElementById("author").value;
@@ -96,7 +92,9 @@ libraryUI.addEventListener("click", (e) => {
       : (newRead = true);
 
     myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
+    // REMOVE
   } else if (e.target.matches(".close_button")) {
+    clickedOnBackground = false;
     const indexForRemoval = myLibrary.books.findIndex(
       (book) => book.title === e.target.parentElement.dataset.value
     );
@@ -104,6 +102,23 @@ libraryUI.addEventListener("click", (e) => {
     editMode = true;
     myLibrary.removeBook(indexForRemoval);
   }
+  if (!clickedOnBackground) {
+    sortAuthors();
+    checkFilters();
+  }
+});
+
+// SUBMIT BOOK listener
+submitBook.addEventListener("click", () => {
+  const newTitle = document.getElementById("title").value;
+  const newAuthor = document.getElementById("author").value;
+  const newPages = document.getElementById("pages").value;
+  let newRead = document.getElementById("read").checked;
+
+  myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
+  sortAuthors();
+  checkFilters();
+  editMode = false;
 });
 
 // FILTER listener
@@ -134,26 +149,23 @@ function updateUI(library) {
   bookList.innerHTML = "";
 
   // Get filter settings before erasing
-  const filterSettings = {
-    authorFilterValue: authorFilterDropdown.value,
-    minPages: minInput.value,
-    maxPages: maxInput.value,
-    readFilterValue: readFilter.value,
-    sortingParameter: sortDropdown.value,
-  };
+  authorFilterValue = authorFilterDropdown.value;
+  minPages = minInput.value;
+  maxPages = maxInput.value;
+  readFilterValue = readFilter.value;
+  sortingParameter = sortDropdown.value;
+
   authorFilterDropdown.innerHTML = "";
   for (const book of library) {
     createBookCard(book);
   }
 
   // Set filters again
-  authorFilterDropdown.value = filterSettings.authorFilterValue;
-  minInput.value = filterSettings.minPages;
-  maxInput.value = filterSettings.maxPages;
-  readFilter.value = filterSettings.readFilterValue;
-  sortDropdown.value = filterSettings.sortingParameter;
-  sortAuthors();
-  checkFilters();
+  authorFilterDropdown.value = authorFilterValue;
+  minInput.value = minPages;
+  maxInput.value = maxPages;
+  readFilter.value = readFilterValue;
+  sortDropdown.value = sortingParameter;
 }
 
 function createBookCard(book) {
@@ -218,11 +230,6 @@ function createBookCard(book) {
   anchor.classList.add("nav_link");
   listItem.appendChild(anchor);
   bookList.appendChild(listItem);
-
-  // listener on save button
-  // form input info to Book constructor and .push to library
-  // WHENEVER A BOOK IS PUSHED ==>>> updateUI
-  // erase form
 }
 
 function openEditDialog(card) {
@@ -385,7 +392,7 @@ function sortAuthors() {
     optionElement.textContent = option.innerText;
     authorFilterDropdown.appendChild(optionElement);
   }
-  if (editMode) {
+  if (authorFilterValue !== undefined && authorFilterValue !== "") {
     authorFilterDropdown.value = authorFilterValue;
   }
 }
@@ -538,6 +545,8 @@ function initializeExampleUI(array) {
   for (const book of array) {
     myLibrary.addNewBook(book.title, book.author, book.pages, book.read);
   }
+  sortAuthors();
+  checkFilters();
 }
 
 initializeExampleUI(exampleArray);
