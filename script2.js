@@ -392,7 +392,6 @@ function sortAuthors() {
     optionElement.textContent = option.innerText;
     authorFilterDropdown.appendChild(optionElement);
   }
-  // TODO: instead of editmode, the condition shold check whether authorFilterValue is different to null//undefined
   if (authorFilterValue !== undefined && authorFilterValue !== "") {
     authorFilterDropdown.value = authorFilterValue;
   }
