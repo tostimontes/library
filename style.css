@@ -239,11 +239,13 @@ header {
       width: 1.9rem;
       > path {
         fill: #3f0000;
-        &:hover {
-          fill: burlywood;
-        }
       }
     }
+    /* &:hover {
+      > svg > path {
+        fill: burlywood;
+      } */
+    /* } */
   }
 }
 
@@ -315,15 +317,17 @@ header {
 
 button {
   transition: transform 0.18s ease;
-  &:not(#add_new_book):hover {
+
+  &:not(#add_new_book):not(.edit_button):hover {
     background-color: #3f0000;
     color: burlywood;
   }
+
   &:active {
     transform: scale(0.93); /* Scales down the button */
-    /* You can add other styles here if needed */
   }
 }
-/* button:hover {
-  transform: scale(1.1);
-} */
+
+.edit_button:hover svg path {
+  fill: burlywood;
+}
