@@ -2,7 +2,12 @@
 let bookInEdition;
 let bookInEditionIndex;
 let editMode = false;
+// FILTER SETTING RECORDERS
 let authorFilterValue;
+let minPages;
+let maxPages;
+let readFilterValue;
+let sortingParameter;
 
 function Book(title = "Unknown", author = "Unknown", pages = 0, read = false) {
   this.title = title;
@@ -144,24 +149,23 @@ function updateUI(library) {
   bookList.innerHTML = "";
 
   // Get filter settings before erasing
-  const filterSettings = {
-    authorFilterValue: authorFilterDropdown.value,
-    minPages: minInput.value,
-    maxPages: maxInput.value,
-    readFilterValue: readFilter.value,
-    sortingParameter: sortDropdown.value,
-  };
+  authorFilterValue = authorFilterDropdown.value;
+  minPages = minInput.value;
+  maxPages = maxInput.value;
+  readFilterValue = readFilter.value;
+  sortingParameter = sortDropdown.value;
+
   authorFilterDropdown.innerHTML = "";
   for (const book of library) {
     createBookCard(book);
   }
 
   // Set filters again
-  authorFilterDropdown.value = filterSettings.authorFilterValue;
-  minInput.value = filterSettings.minPages;
-  maxInput.value = filterSettings.maxPages;
-  readFilter.value = filterSettings.readFilterValue;
-  sortDropdown.value = filterSettings.sortingParameter;
+  authorFilterDropdown.value = authorFilterValue;
+  minInput.value = minPages;
+  maxInput.value = maxPages;
+  readFilter.value = readFilterValue;
+  sortDropdown.value = sortingParameter;
 }
 
 function createBookCard(book) {
@@ -388,7 +392,8 @@ function sortAuthors() {
     optionElement.textContent = option.innerText;
     authorFilterDropdown.appendChild(optionElement);
   }
-  if (editMode) {
+  // TODO: instead of editmode, the condition shold check whether authorFilterValue is different to null//undefined
+  if (authorFilterValue !== undefined && authorFilterValue !== "") {
     authorFilterDropdown.value = authorFilterValue;
   }
 }
