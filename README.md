@@ -11,5 +11,7 @@ To improve
 - Include card animations
 - Automatic links in title to Wikipedia article
 - Check upon book addition for copied elements in the library
+- Add search functionality
+- Add responsiveness
 
 Feel free to interact with the library and leave any comments. You can check it out at: https://tostimontes.github.io/library/
