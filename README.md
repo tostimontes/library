@@ -10,6 +10,9 @@ Known issues
 
 To improve
 - Include animations
-- Automatatic links in title to Wikipedia article
+- Automatic links in title to Wikipedia article
+- Separate filter and sorting checks from UI updates to improve performance and reduce future complexity
+- Set filter settings as global variables
+- Check upon book addition for copied elements in the library
 
 Feel free to interact with the library and leave any comments. You can check it out at: https://tostimontes.github.io/library/
