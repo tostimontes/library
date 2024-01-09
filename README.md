@@ -6,13 +6,10 @@ I tried to experiment with some additional filtering and sorting functionalities
 I then rewrote the whole script again (you can see differences between script.js and script2.js), and by updating the whole UI after any interaction I achieved the filtering and sorting functionality in an intuitive way.
 
 Known issues
-- Grid row gap changes depending on number of children on display
 
 To improve
-- Include animations
+- Include card animations
 - Automatic links in title to Wikipedia article
-- Separate filter and sorting checks from UI updates to improve performance and reduce future complexity
-- Set filter settings as global variables
 - Check upon book addition for copied elements in the library
 
 Feel free to interact with the library and leave any comments. You can check it out at: https://tostimontes.github.io/library/
