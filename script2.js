@@ -23,7 +23,6 @@ function Library() {
     updateUI(this.books);
     clearForm();
     dialog.close();
-    editMode = false;
   };
 
   this.removeBook = (index) => {
@@ -66,26 +65,18 @@ addBookButton.addEventListener("click", () => {
   dialog.showModal();
 });
 
-// SUBMIT BOOK listener
-submitBook.addEventListener("click", () => {
-  const newTitle = document.getElementById("title").value;
-  const newAuthor = document.getElementById("author").value;
-  const newPages = document.getElementById("pages").value;
-  let newRead = document.getElementById("read").checked;
-
-  myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
-});
-
-// EDIT button listener
+// EDIT && TOGGLE READ && REMOVE buttons listeners
 libraryUI.addEventListener("click", (e) => {
+  let clickedOnBackground = true;
+  // EDIT
   const editDiv = e.target.closest(".edit_button");
-  const cardInEdition = editDiv.parentElement;
-  openEditDialog(cardInEdition);
-});
-
-// REMOVE && TOGGLE READ buttons listeners
-libraryUI.addEventListener("click", (e) => {
-  if (e.target.matches(".read_status")) {
+  if (editDiv !== null) {
+    const cardInEdition = editDiv.parentElement;
+    clickedOnBackground = false;
+    openEditDialog(cardInEdition);
+    // READ TOGGLE
+  } else if (e.target.matches(".read_status")) {
+    clickedOnBackground = false;
     openEditDialog(e.target.parentElement);
     const newTitle = document.getElementById("title").value;
     const newAuthor = document.getElementById("author").value;
@@ -96,7 +87,9 @@ libraryUI.addEventListener("click", (e) => {
       : (newRead = true);
 
     myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
+    // REMOVE
   } else if (e.target.matches(".close_button")) {
+    clickedOnBackground = false;
     const indexForRemoval = myLibrary.books.findIndex(
       (book) => book.title === e.target.parentElement.dataset.value
     );
@@ -104,6 +97,23 @@ libraryUI.addEventListener("click", (e) => {
     editMode = true;
     myLibrary.removeBook(indexForRemoval);
   }
+  if (!clickedOnBackground) {
+    sortAuthors();
+    checkFilters();
+  }
+});
+
+// SUBMIT BOOK listener
+submitBook.addEventListener("click", () => {
+  const newTitle = document.getElementById("title").value;
+  const newAuthor = document.getElementById("author").value;
+  const newPages = document.getElementById("pages").value;
+  let newRead = document.getElementById("read").checked;
+
+  myLibrary.addNewBook(newTitle, newAuthor, newPages, newRead);
+  sortAuthors();
+  checkFilters();
+  editMode = false;
 });
 
 // FILTER listener
@@ -152,8 +162,6 @@ function updateUI(library) {
   maxInput.value = filterSettings.maxPages;
   readFilter.value = filterSettings.readFilterValue;
   sortDropdown.value = filterSettings.sortingParameter;
-  sortAuthors();
-  checkFilters();
 }
 
 function createBookCard(book) {
@@ -218,11 +226,6 @@ function createBookCard(book) {
   anchor.classList.add("nav_link");
   listItem.appendChild(anchor);
   bookList.appendChild(listItem);
-
-  // listener on save button
-  // form input info to Book constructor and .push to library
-  // WHENEVER A BOOK IS PUSHED ==>>> updateUI
-  // erase form
 }
 
 function openEditDialog(card) {
@@ -538,6 +541,8 @@ function initializeExampleUI(array) {
   for (const book of array) {
     myLibrary.addNewBook(book.title, book.author, book.pages, book.read);
   }
+  sortAuthors();
+  checkFilters();
 }
 
 initializeExampleUI(exampleArray);
