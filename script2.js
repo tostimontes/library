@@ -9,17 +9,21 @@ let maxPages;
 let readFilterValue;
 let sortingParameter;
 
-function Book(title = "Unknown", author = "Unknown", pages = 0, read = false) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+class Book {
+  constructor(title = "Unknown", author = "Unknown", pages = 0, read = false) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
 }
 
-function Library() {
-  this.books = [];
+class Library {
+  constructor() {
+    this.books = [];
+  }
 
-  this.addNewBook = (title, author, pages, read) => {
+  addNewBook(title, author, pages, read) {
     if (editMode) {
       this.removeBook(bookInEditionIndex);
     }
@@ -28,12 +32,13 @@ function Library() {
     updateUI(this.books);
     clearForm();
     dialog.close();
-  };
+  }
 
-  this.removeBook = (index) => {
+    removeBook(index) {
     this.books.splice(index, 1);
     updateUI(this.books);
   };
+
 }
 // GLOBAL VARIABLES
 const myLibrary = new Library();
