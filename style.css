@@ -76,13 +76,13 @@ header {
 
 .library {
   width: 100%;
+  height: calc(100vh - 10rem);
   position: relative;
   display: grid;
   padding: 3rem;
   grid-auto-rows: 20rem;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 25rem));
   gap: 3rem;
-  height: calc(100vh - 10rem);
   overflow-y: auto;
 }
 
