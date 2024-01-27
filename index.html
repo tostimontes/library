@@ -20,18 +20,28 @@
           <form action="" method="dialog" id="book_form">
             <p>Please introduce the book data:</p>
             <button id="close_dialog">X</button><label for="title">Title</label
-            ><input type="text" id="title" name="title" required /><label
-              for="author"
-              >Author</label
-            ><input type="text" id="author" name="author" required /><label
-              for="pages"
-              >Number of pages</label
-            ><input type="number" id="pages" name="pages" required />
+            ><input
+              type="text"
+              id="title"
+              name="title"
+              minlength="3"
+              maxlength="35"
+              required
+            /><label for="author">Author</label
+            ><input
+              type="text"
+              id="author"
+              name="author"
+              minlength="3"
+              maxlength="35"
+              required
+            /><label for="pages">Number of pages</label
+            ><input type="number" id="pages" name="pages" min="1" required />
             <div class="read_box">
               <label for="read">Have you read it?</label
               ><input type="checkbox" id="read" name="read" />
             </div>
-            <button id="form_submit">Save</button>
+            <button id="form_submit" type="submit">Save</button>
           </form>
         </dialog>
         <!-- EDIT IDs FOR NON CONFUSION -->
@@ -39,36 +49,40 @@
       <!-- Add Sort, Filter by [...], show/hide, search bar with input listener  -->
       <div class="controls">
         <button id="add_new_book">+</button>
-        <div class="filter author_filter">Filter by author:
+        <div class="filter author_filter">
+          Filter by author:
           <select name="authors" id="author_list">
             <option value="All authors">All authors</option>
           </select>
         </div>
-        <div class="filter pages_filter">Filter by number of pages: <br>
+        <div class="filter pages_filter">
+          Filter by number of pages: <br />
           <label for="min_pages">Min:</label>
-          <input type="number" id="min_pages" name="min_pages" min="0"/>
+          <input type="number" id="min_pages" name="min_pages" min="0" />
           <label for="max_pages">Max:</label>
-          <input type="number" id="max_pages" name="max_pages" min="0"/>
+          <input type="number" id="max_pages" name="max_pages" min="0" />
         </div>
-        <div class="filter read_filter">Filter by read status:
+        <div class="filter read_filter">
+          Filter by read status:
           <select name="read_or_not" id="read_or_not_filter">
             <option value="default">Choose read status</option>
             <option value="true">Read</option>
             <option value="false">Not read yet</option>
           </select>
         </div>
-          <div class="sort_list">Sort by:
-            <select name="" id="sort_options">
-              <option value="default"></option>
-              <option value="title ascending">Title A - Z</option>
-              <option value="title descending">Title Z - A</option>
-              <option value="author ascending">Author A - Z</option>
-              <option value="author descending">Author Z - A</option>
-              <option value="pages ascending"># of pages (ascending)</option>
-              <option value="pages descending"># of pages (descending)</option>
-            </select>
-          </div>
-          <button id="reset_filters">Reset filters</button>
+        <div class="sort_list">
+          Sort by:
+          <select name="" id="sort_options">
+            <option value="default"></option>
+            <option value="title ascending">Title A - Z</option>
+            <option value="title descending">Title Z - A</option>
+            <option value="author ascending">Author A - Z</option>
+            <option value="author descending">Author Z - A</option>
+            <option value="pages ascending"># of pages (ascending)</option>
+            <option value="pages descending"># of pages (descending)</option>
+          </select>
+        </div>
+        <button id="reset_filters">Reset filters</button>
       </div>
       <div id="photo_credit">
         Foto de

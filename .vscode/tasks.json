@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Git Push",
+      "type": "shell",
+      "command": "git push origin main",
+      "group": "none"
+    },
+    {
+      "label": "Git Pull",
+      "type": "shell",
+      "command": "git pull origin main",
+      "group": "none"
+    },
+    {
+      "label": "Git Merge and Delete Branch",
+      "type": "shell",
+      "command": "./scripts/git-merge-and-delete.sh",
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "label": "Create and Switch to New Branch",
+      "type": "shell",
+      "command": "./scripts/create-and-switch-branch.sh",
+      "problemMatcher": [],
+      "group": "none"
+    }
+  ]
+}

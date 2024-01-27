@@ -1,17 +1,15 @@
 # library
 
-Second version of the Library project from The Odin Project's Javascript curriculum.
+This project is a Library Management App, developed as part of the Odin Project's JavaScript curriculum. The application enables users to manage a collection of books, showcasing CRUD operations, as well as filtering and sorting capabilities. 
 
-I tried to experiment with some additional filtering and sorting functionalities, which resulted in some messiness because several filters don't add up in an intuitive way with the script's first version.
-I then rewrote the whole script again (you can see differences between script.js and script2.js), and by updating the whole UI after any interaction I achieved the filtering and sorting functionality in an intuitive way.
+Feel free to interact with the library and leave any comments. You can check it out at the [Library app](https://tostimontes.github.io/library/)
+## Technical Highlights
+- **Form Validation**: Implements form validation to ensure data integrity when adding or editing books.
+- **Filter and Sort Functions**: Provides filtering by author, page count, read status, and sorting options to enhance user interaction.
 
-Known issues
-
-To improve
-- Include card animations
-- Automatic links in title to Wikipedia article
-- Check upon book addition for copied elements in the library
-- Add search functionality
-- Add responsiveness
-
-Feel free to interact with the library and leave any comments. You can check it out at: https://tostimontes.github.io/library/
+## Possible Improvements and Additional Features
+- **Persistent Storage**: Integration with a backend database or cloud service for data persistence.
+- **User Accounts**: Allowing multiple users to maintain their own personal libraries.
+- **Advanced Search**: Implementing a more comprehensive search function, possibly including fuzzy search.
+- **Mobile Responsiveness**: Enhancing the app's responsiveness for better usability on various screen sizes.
+- **Internationalization**: Adding support for multiple languages.
